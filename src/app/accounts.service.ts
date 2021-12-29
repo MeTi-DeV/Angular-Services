@@ -1,4 +1,9 @@
+import {Injectable} from '@angular/core';
+import {LoggingService} from './logging.service';
+
 export class AccountsService {
+  //commented 1 : for call a service in other service we need too add @Injectable()
+  @Injectable()
   accounts = [
     {
       name: 'Master Account',
@@ -14,11 +19,17 @@ export class AccountsService {
     }
   ];
 
+  constructor(private loggingService: LoggingService) {
+  }
+
   addAccount(name: string, status: string) {
     this.accounts.push({name: name, status: status});
   }
 
   updateAccount(id: number, status: string) {
     this.accounts[id].status = status;
+    this.loggingService.logStatusChange(status);
+
   }
+
 }
